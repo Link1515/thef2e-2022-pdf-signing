@@ -7,7 +7,7 @@ const Navbar = () => {
         <div className="logo">
           <img src={imageLogo} alt="logo" />
         </div>
-        <h1 className="absolute left-0 right-0 mx-auto hidden w-fit text-2xl font-bold tracking-wide text-dark-gray md:block">
+        <h1 className="text-gray-dark absolute left-0 right-0 mx-auto hidden w-fit text-2xl font-bold tracking-wide md:block">
           快速省時的電子簽署工具
         </h1>
       </div>
