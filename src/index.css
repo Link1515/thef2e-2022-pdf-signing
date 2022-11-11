@@ -10,3 +10,17 @@
     font-family: 'Noto Sans TC', sans-serif;
   }
 }
+
+@layer utilities {
+  .absolute-center {
+    @apply absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2;
+  }
+
+  .dropZoneBgDash {
+    background: 
+      repeat-x linear-gradient(to right, #0B7D77 65%, rgba(0,0,0,0) 0%) center top / 51px 2px,
+      repeat-x linear-gradient(to right, #0B7D77 65%, rgba(0,0,0,0) 0%) center bottom / 51px 2px,
+      repeat-y linear-gradient(to bottom, #0B7D77 65%, rgba(0,0,0,0) 0%) left top / 2px 51px,
+      repeat-y linear-gradient(to bottom, #0B7D77 65%, rgba(0,0,0,0) 0%) right top / 2px 51px;
+  }
+}

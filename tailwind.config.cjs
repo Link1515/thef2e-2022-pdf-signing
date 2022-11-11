@@ -8,6 +8,9 @@ module.exports = {
     },
     extend: {
       colors: {
+        primary: '#0B7D77',
+        'primary-selected': '#CEE5E4',
+        'primary-hover': '#096561',
         'dark-gray': '#676879',
         gray: '#C5C7D0'
       }
