@@ -1,12 +1,14 @@
 import { useStepStore } from '../store'
 import StepNum from './StepNum'
 
-interface Props {
-  stepTitles: string[]
-}
+const stepTitles: string[] = [
+  '成功上傳檔案',
+  '加入簽名檔',
+  '確認檔案',
+  '下載檔案'
+]
 
-const Stepbar = (props: Props) => {
-  const { stepTitles } = props
+const Stepbar = () => {
   const step = useStepStore()
 
   return (
@@ -15,7 +17,7 @@ const Stepbar = (props: Props) => {
         <div key={index} className="flex items-center">
           <StepNum num={index} />
           <span
-            className={`w-0 overflow-hidden lg:mr-4 ${
+            className={`overflow-hidden lg:mr-4 lg:ml-3 lg:w-auto ${
               step.now === index ? 'ml-3 w-auto' : 'w-0'
             }`}
           >
