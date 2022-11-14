@@ -1,14 +1,35 @@
 import { useDropzone } from 'react-dropzone'
+import { useNavigate } from 'react-router-dom'
 import imageUpload from '../assets/images/upload.png'
+import { useBaseFileStore } from '../store'
+import { fileTobase64, base64pdfToCanvas } from '../utils'
 
 const FileDropZone = () => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone()
+  const navigate = useNavigate()
+  const baseFile = useBaseFileStore()
 
-  // const files = acceptedFiles.map(file => (
-  //   <li key={file.name}>
-  //     {file.name} - {file.size} bytes
-  //   </li>
-  // ))
+  const onDrop = async (acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      const file = acceptedFiles[0]
+      const fileUrl = await fileTobase64(file)
+      const pdfCanvas = await base64pdfToCanvas(fileUrl)
+
+      baseFile.setCanvasEl(pdfCanvas)
+
+      navigate('/edit')
+    }
+  }
+
+  const { fileRejections, getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { 'application/pdf': ['.pdf'] },
+    maxFiles: 1
+  })
+
+  let fileRejectionFirstErr: string | null = null
+  if (fileRejections.length > 0) {
+    fileRejectionFirstErr = fileRejections[0].errors[0].message
+  }
 
   return (
     <div className="dropZoneBgDash mt-10 cursor-pointer bg-primary p-[2px]">
@@ -24,7 +45,10 @@ const FileDropZone = () => {
             選擇檔案
           </p>
           <p className="px-4 text-sm font-bold text-primary-hover">
-            檔案大小10Mb以內，檔案格式為PDF、IMG
+            檔案大小10Mb以內，檔案格式為PDF
+          </p>
+          <p className="px-4 text-xl font-bold text-red-600">
+            {fileRejectionFirstErr}
           </p>
         </div>
       </div>

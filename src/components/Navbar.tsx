@@ -1,4 +1,5 @@
 import imageLogo from '../assets/images/logo.png'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   return (
@@ -11,6 +12,7 @@ const Navbar = () => {
           快速省時的電子簽署工具
         </h1>
       </div>
+      <Link to="edit">go to edit</Link>
     </div>
   )
 }
