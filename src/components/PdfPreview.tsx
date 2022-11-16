@@ -6,24 +6,30 @@ import { handlePdf } from '../utils'
 
 const PdfPreview = () => {
   const stage = useRef<konva.Stage>(null)
+  const previewBox = useRef<HTMLDivElement>(null)
   const baseFile = useBaseFileStore()
   const [baseFileCanvas, setBaseFileCanvas] = useState<HTMLCanvasElement>()
+  const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 })
 
   useEffect(() => {
     const defineBaseFile = async () => {
+      if (!previewBox.current) return
+
       if (baseFile.pdfDocProxy) {
         const baseFilePageProxy = await handlePdf.getPage(
           baseFile.pdfDocProxy,
           1
         )
 
-        setBaseFileCanvas(
-          await handlePdf.getCanvas(baseFilePageProxy, {
-            containerWidth: 400,
-            containerHeight: 600,
-            scale: 'fullWidth'
-          })
-        )
+        const canvas = await handlePdf.getCanvas(baseFilePageProxy, {
+          containerWidth: previewBox.current.clientWidth,
+          containerHeight: window.innerHeight - 180,
+          scale: 'fullHeight'
+        })
+        if (!canvas) return
+
+        setBaseFileCanvas(canvas.el)
+        setPreviewSize({ width: canvas.width, height: canvas.height })
       }
     }
 
@@ -31,11 +37,18 @@ const PdfPreview = () => {
   }, [])
 
   return (
-    <Stage ref={stage} width={400} height={600} className="mx-auto">
-      <Layer>
-        <Image image={baseFileCanvas} />
-      </Layer>
-    </Stage>
+    <div ref={previewBox}>
+      <Stage
+        ref={stage}
+        width={previewSize.width}
+        height={previewSize.height}
+        className="flex justify-center"
+      >
+        <Layer>
+          <Image image={baseFileCanvas} />
+        </Layer>
+      </Stage>
+    </div>
   )
 }
 

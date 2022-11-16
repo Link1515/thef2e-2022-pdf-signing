@@ -20,7 +20,7 @@ const renderCanvas = async ({
     viewport
   }).promise
 
-  return canvas
+  return { el: canvas, width: viewport.width, height: viewport.height }
 }
 
 export const handlePdf = {
