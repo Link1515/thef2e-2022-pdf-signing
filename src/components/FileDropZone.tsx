@@ -2,7 +2,7 @@ import { useDropzone } from 'react-dropzone'
 import { useNavigate } from 'react-router-dom'
 import imageUpload from '../assets/images/upload.png'
 import { useBaseFileStore } from '../store'
-import { fileTobase64, base64pdfToCanvas } from '../utils'
+import { fileTobase64, handlePdf } from '../utils'
 
 const FileDropZone = () => {
   const navigate = useNavigate()
@@ -12,9 +12,9 @@ const FileDropZone = () => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0]
       const fileUrl = await fileTobase64(file)
-      const pdfCanvas = await base64pdfToCanvas(fileUrl)
+      const pdfDocProxy = await handlePdf.buildPdfDoc(fileUrl)
 
-      baseFile.setCanvasEl(pdfCanvas)
+      baseFile.setPdfDocProxy(pdfDocProxy)
 
       navigate('/edit')
     }
