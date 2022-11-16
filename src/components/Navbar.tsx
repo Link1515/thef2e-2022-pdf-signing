@@ -12,7 +12,6 @@ const Navbar = () => {
           快速省時的電子簽署工具
         </h1>
       </div>
-      <Link to="edit">go to edit</Link>
     </div>
   )
 }
