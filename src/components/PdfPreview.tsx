@@ -20,9 +20,9 @@ const PdfPreview = () => {
         )
 
         const canvas = await handlePdf.getCanvas(baseFilePageProxy, {
-          containerWidth: previewBox.current.clientWidth,
+          containerWidth: previewBox.current.clientWidth - 40,
           containerHeight: window.innerHeight - 180,
-          scale: 'fullHeight'
+          scale: 'fullWidth'
         })
         if (!canvas) return
 
@@ -35,7 +35,11 @@ const PdfPreview = () => {
   }, [])
 
   return (
-    <div ref={previewBox}>
+    <div
+      ref={previewBox}
+      className="overflow-auto py-4"
+      style={{ height: window.innerHeight - 180 + 'px' }}
+    >
       <Stage
         ref={stage}
         width={baseFile.previewSize.width}
