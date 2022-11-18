@@ -33,7 +33,7 @@ export const useSignStore = create<SignState>()(
     }),
     {
       name: 'sign-storage',
-      partialize: state => ({ signList: state.localList })
+      partialize: state => ({ localList: state.localList })
     }
   )
 )
