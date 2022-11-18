@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import iconCancel from '../assets/images/icons/cancel.png'
 import SignArea from './SignArea'
+import { getElementContentWidth } from '../utils'
 
 interface Props {
   showModel: boolean
@@ -17,14 +18,7 @@ const Model = (props: Props) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     if (modelBox.current) {
-      const modelBoxWidth = modelBox.current.clientWidth
-      const modelBoxStyle = getComputedStyle(modelBox.current)
-
-      setSignAreaWidth(
-        modelBoxWidth -
-          parseFloat(modelBoxStyle.paddingLeft) -
-          parseFloat(modelBoxStyle.paddingRight)
-      )
+      setSignAreaWidth(getElementContentWidth(modelBox.current))
     }
 
     return () => {
