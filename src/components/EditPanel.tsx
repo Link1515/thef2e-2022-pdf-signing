@@ -44,7 +44,7 @@ const EditPanel = () => {
         創建簽名
       </button>
       <div
-        className="mb-auto overflow-hidden hover:overflow-y-auto"
+        className="scrollbar-hide mb-auto overflow-hidden overflow-y-auto"
         style={{ maxHeight: `${signPreviewSize.height}px` }}
       >
         {signStore.localList.map(signUrl => (
@@ -52,7 +52,6 @@ const EditPanel = () => {
             className="mb-2 rounded border border-gray-dark"
             url={signUrl}
             width={signPreviewSize.width}
-            height={150}
             key={signUrl}
           />
         ))}

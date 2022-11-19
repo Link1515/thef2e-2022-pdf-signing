@@ -3,20 +3,27 @@ import { Stage, Layer, Image } from 'react-konva'
 
 interface Props {
   url: string
-  height: number
   width: number
   className: string
 }
 
 const ImageUrl = (props: Props) => {
-  const { url, width, height, className } = props
+  const { url, width, className } = props
   const [img] = useImage(url)
 
+  let ratio = 1
+  if (img) {
+    ratio = width / img.naturalWidth
+  }
+
   return (
-    <Stage width={width} height={height} className={className}>
+    <Stage
+      width={width}
+      height={(img?.naturalHeight || 0) * ratio}
+      className={className}
+    >
       <Layer>
-        {/* TODO modify to dynamic scale */}
-        <Image image={img} scale={{ x: 0.8, y: 0.8 }} />
+        <Image image={img} scale={{ x: ratio, y: ratio }} />
       </Layer>
     </Stage>
   )
