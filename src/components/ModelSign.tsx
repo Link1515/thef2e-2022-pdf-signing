@@ -16,17 +16,14 @@ const Model = (props: Props) => {
   const [signAreaWidth, setSignAreaWidth] = useState(0)
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden'
+    document.body.style.overflow = showModel ? 'hidden' : ''
+
     if (modelBox.current) {
       setSignAreaWidth(
         getElementContentSize({ element: modelBox.current, type: 'width' })
       )
     }
-
-    return () => {
-      document.body.style.overflow = ''
-    }
-  })
+  }, [showModel])
 
   return (
     <AnimatePresence>
