@@ -1,7 +1,7 @@
 import iconPlus from '../assets/images/icons/plus.png'
 import { useState, useRef, useEffect } from 'react'
 import { useSignStore } from '../store'
-import { getElementContentWidth } from '../utils'
+import { getElementContentSize } from '../utils'
 import ModelSign from './ModelSign'
 import ImageUrlPreview from './ImageUrlPreview'
 
@@ -13,7 +13,9 @@ const EditPanel = () => {
 
   useEffect(() => {
     if (!editPanel.current) return
-    setImageUrlPreviewWidth(getElementContentWidth(editPanel.current))
+    setImageUrlPreviewWidth(
+      getElementContentSize({ element: editPanel.current, type: 'width' })
+    )
   })
 
   return (
@@ -35,7 +37,6 @@ const EditPanel = () => {
           />
         ))}
       </div>
-
       <footer>
         <button className="h-12 w-full rounded bg-primary font-bold text-white">
           下一步

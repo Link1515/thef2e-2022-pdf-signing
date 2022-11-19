@@ -6,10 +6,11 @@ import { useSignStore } from '../store'
 interface Props {
   width: number
   height: number
+  onSave: () => void
 }
 
 const SignArea = (props: Props) => {
-  const { width, height } = props
+  const { width, height, onSave } = props
   const signStore = useSignStore()
   const stage = useRef<konva.Stage>(null)
   const isDrawing = useRef(false)
@@ -65,6 +66,7 @@ const SignArea = (props: Props) => {
     const signBase64 = stage.current.toDataURL()
     signStore.saveToLocal(signBase64)
     clear()
+    onSave() // close model after save
   }
 
   return (
