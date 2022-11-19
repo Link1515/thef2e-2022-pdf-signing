@@ -38,7 +38,7 @@ const EditPanel = () => {
     <div ref={editPanel} className="flex flex-col gap-2 p-6">
       <button
         onClick={() => setModelState(true)}
-        className="flex h-12 w-full items-center justify-center gap-4 rounded border border-gray font-semibold"
+        className="flex h-12 w-full items-center justify-center gap-4 rounded border border-gray font-semibold transition-colors duration-200 hover:bg-primary-selected"
       >
         <img src={iconPlus} alt="plus" />
         創建簽名
@@ -49,7 +49,7 @@ const EditPanel = () => {
       >
         {signStore.localList.map(signUrl => (
           <ImageUrlPreview
-            className="mb-2 rounded border border-gray-dark"
+            className="mb-2 cursor-pointer rounded border border-gray-dark transition-colors duration-200 hover:bg-primary-selected"
             url={signUrl}
             width={signPreviewSize.width}
             key={signUrl}
