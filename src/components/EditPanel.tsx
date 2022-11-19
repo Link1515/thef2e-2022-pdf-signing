@@ -8,18 +8,34 @@ import ImageUrlPreview from './ImageUrlPreview'
 const EditPanel = () => {
   const [showModel, setModelState] = useState(false)
   const editPanel = useRef<HTMLDivElement>(null)
-  const [imageUrlPreviewWidth, setImageUrlPreviewWidth] = useState(0)
+  const [signPreviewSize, setSignPreviewSize] = useState({
+    width: 0,
+    height: 0
+  })
   const signStore = useSignStore()
 
   useEffect(() => {
     if (!editPanel.current) return
-    setImageUrlPreviewWidth(
-      getElementContentSize({ element: editPanel.current, type: 'width' })
-    )
-  })
+
+    setSignPreviewSize({
+      width: getElementContentSize({
+        element: editPanel.current,
+        type: 'width'
+      }),
+      height:
+        getElementContentSize({
+          element: editPanel.current,
+          type: 'height'
+        }) -
+        // button height
+        48 * 2 -
+        // gap
+        8 * 2
+    })
+  }, [])
 
   return (
-    <div ref={editPanel} className="flex flex-col p-6">
+    <div ref={editPanel} className="flex flex-col gap-2 p-6">
       <button
         onClick={() => setModelState(true)}
         className="flex h-12 w-full items-center justify-center gap-4 rounded border border-gray font-semibold"
@@ -27,11 +43,15 @@ const EditPanel = () => {
         <img src={iconPlus} alt="plus" />
         創建簽名
       </button>
-      <div className="mb-auto">
+      <div
+        className="mb-auto overflow-hidden hover:overflow-y-auto"
+        style={{ maxHeight: `${signPreviewSize.height}px` }}
+      >
         {signStore.localList.map(signUrl => (
           <ImageUrlPreview
+            className="mb-2 rounded border border-gray-dark"
             url={signUrl}
-            width={imageUrlPreviewWidth}
+            width={signPreviewSize.width}
             height={150}
             key={signUrl}
           />
