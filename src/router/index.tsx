@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
 import Home from '../pages/Home'
 import Edit from '../pages/Edit'
+import Final from '../pages/Final'
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: 'edit',
         element: <Edit />
+      },
+      {
+        path: 'final',
+        element: <Final />
       }
     ]
   }

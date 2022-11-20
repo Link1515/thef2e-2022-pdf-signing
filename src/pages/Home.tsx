@@ -1,4 +1,5 @@
 import FileDropZone from '../components/FileDropZone'
+import Navbar from '../components/Navbar'
 import CardStep from '../components/CardStep'
 import imageFileUpload from '../assets/images/steps/file-upload.png'
 import imageSigning from '../assets/images/steps/signing.png'
@@ -7,6 +8,7 @@ import imageSending from '../assets/images/steps/sending.png'
 const UploadFile = () => {
   return (
     <>
+      <Navbar />
       <div className="container">
         <FileDropZone />
         <h3 className="mt-10 mb-7 text-center text-2xl font-bold text-gray-darker">
