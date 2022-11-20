@@ -5,7 +5,13 @@ import { getElementContentSize } from '../utils'
 import ModelSign from './ModelSign'
 import ImageUrlPreview from './ImageUrlPreview'
 
-const EditPanel = () => {
+interface Props {
+  onGoNext: () => void
+}
+
+const EditPanel = (props: Props) => {
+  const { onGoNext } = props
+
   const [showModel, setModelState] = useState(false)
   const editPanel = useRef<HTMLDivElement>(null)
   const [signPreviewSize, setSignPreviewSize] = useState({
@@ -63,7 +69,7 @@ const EditPanel = () => {
         ))}
       </div>
       <footer>
-        <button className="h-12 w-full rounded bg-primary font-bold text-white">
+        <button onClick={onGoNext} className="h-12 w-full rounded bg-primary font-bold text-white">
           下一步
         </button>
       </footer>

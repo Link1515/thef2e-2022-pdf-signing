@@ -1,13 +1,20 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import konva from 'konva'
 import { Stage, Layer, Image } from 'react-konva'
 import { useBaseFileStore, useSignStore } from '../store'
 import { handlePdf } from '../utils'
 import TransformableImage from './ImageTransformable'
 
-const PdfPreview = () => {
+interface Props {
+  isFinish: boolean
+}
+
+const PdfPreview = (props: Props) => {
+  const { isFinish } = props
+
   const stage = useRef<konva.Stage>(null)
   const previewBox = useRef<HTMLDivElement>(null)
+  const [previewSize, setPreviewSize] = useState({ width: 0, height: 0 })
 
   const baseFileStore = useBaseFileStore()
   const signStore = useSignStore()
@@ -30,7 +37,7 @@ const PdfPreview = () => {
         if (!canvas) return
 
         baseFileStore.setCanvasEl(canvas.el)
-        baseFileStore.setPreviewSize({
+        setPreviewSize({
           width: canvas.width,
           height: canvas.height
         })
@@ -40,6 +47,12 @@ const PdfPreview = () => {
     defineBaseFile()
   }, [])
 
+  useEffect(() => {
+    if (isFinish && stage.current) {
+      baseFileStore.setFinalData(stage.current.toDataURL())
+    }
+  }, [isFinish])
+
   return (
     <div
       ref={previewBox}
@@ -48,8 +61,8 @@ const PdfPreview = () => {
     >
       <Stage
         ref={stage}
-        width={baseFileStore.previewSize.width}
-        height={baseFileStore.previewSize.height}
+        width={previewSize.width}
+        height={previewSize.height}
         className="flex justify-center"
       >
         <Layer>
