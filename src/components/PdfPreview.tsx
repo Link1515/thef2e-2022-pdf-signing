@@ -60,7 +60,7 @@ const PdfPreview = (props: Props) => {
     <div
       ref={previewBox}
       className="overflow-auto py-4"
-      style={{ height: window.innerHeight - 180 + 'px' }}
+      style={{ height: window.innerHeight - 100 + 'px' }}
     >
       <Stage
         ref={stage}

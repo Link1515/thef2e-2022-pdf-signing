@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Navbar from '../components/Navbar'
-import Stepbar from '../components/Stepbar'
 import PdfPreview from '../components/PdfPreview'
 import EditPanel from '../components/EditPanel'
 
@@ -10,7 +9,6 @@ const Edit = () => {
   return (
     <>
       <Navbar />
-      <Stepbar />
       <div className="grid grid-cols-[auto_400px]">
         <PdfPreview isFinish={isFinish} />
         <EditPanel
