@@ -2,12 +2,13 @@ import { useRef, useEffect, useState } from 'react'
 import konva from 'konva'
 import type { KonvaNodeEvents } from 'react-konva'
 import { Image, Transformer } from 'react-konva'
+import type { Sign } from '../store'
 import { useSignStore } from '../store'
 import useImage from 'use-image'
 
 interface Props {
   isSelected: boolean
-  signUrl: string
+  sign: Sign
 }
 
 interface ImageProps {
@@ -18,7 +19,7 @@ interface ImageProps {
 }
 
 const TransformableImage = (props: Props) => {
-  const { isSelected, signUrl } = props
+  const { isSelected, sign } = props
 
   const imageRef = useRef<konva.Image>(null)
   const trRef = useRef<konva.Transformer>(null)
@@ -31,7 +32,7 @@ const TransformableImage = (props: Props) => {
   })
 
   const signStore = useSignStore()
-  const [img] = useImage(signUrl)
+  const [img] = useImage(sign.url)
 
   useEffect(() => {
     if (isSelected) {
@@ -90,8 +91,8 @@ const TransformableImage = (props: Props) => {
         {...imageProps}
         ref={imageRef}
         draggable
-        onClick={() => signStore.select(signUrl)}
-        onTap={() => signStore.select(signUrl)}
+        onClick={() => signStore.select(sign.id)}
+        onTap={() => signStore.select(sign.id)}
         onDragEnd={handleDragEnd}
         onTransformEnd={handleTransformEnd}
       />

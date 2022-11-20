@@ -1,41 +1,53 @@
 import create from 'zustand'
 import { persist } from 'zustand/middleware'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
+import { nanoid } from 'nanoid'
+export interface Sign {
+  id: string
+  url: string
+}
 
 interface SignState {
-  localList: string[]
-  saveToLocal: (sign: string) => void
-  removeFromLocal: (index: number) => void
+  localList: Sign[]
+  saveToLocal: (url: string) => void
+  removeFromLocal: (id: string) => void
 
-  usingList: string[]
-  selectedSign: string
-  apply: (sign: string) => void
-  remove: (index: number) => void
-  select: (sign: string) => void
+  usingList: Sign[]
+  selectedId: string
+  apply: (sign: Sign) => void
+  remove: (id: string) => void
+  select: (id: string) => void
 }
 
 export const useSignStore = create<SignState>()(
   persist(
     set => ({
       localList: [],
-      saveToLocal: sign =>
-        set(state => ({ localList: [...state.localList, sign] })),
-      removeFromLocal: index =>
+      saveToLocal: url =>
+        set(state => ({
+          localList: [...state.localList, { id: nanoid(), url }]
+        })),
+      removeFromLocal: id =>
         set(state => {
-          state.localList.splice(index, 1)
-          return { localList: [...state.localList] }
+          return {
+            localList: [...state.localList.filter(sign => sign.id !== id)]
+          }
         }),
 
       usingList: [],
-      selectedSign: '',
-      apply: sign => set(state => ({ usingList: [...state.usingList, sign] })),
-      remove: index =>
+      selectedId: '',
+      apply: sign =>
+        set(state => ({
+          usingList: [...state.usingList, sign]
+        })),
+      remove: id =>
         set(state => {
-          state.usingList.splice(index, 1)
-          return { usingList: [...state.usingList] }
+          return {
+            usingList: [...state.usingList.filter(sign => sign.id !== id)]
+          }
         }),
-      select: sign => {
-        set({ selectedSign: sign })
+      select: id => {
+        set({ selectedId: id })
       }
     }),
     {

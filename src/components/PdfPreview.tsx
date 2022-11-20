@@ -54,11 +54,11 @@ const PdfPreview = () => {
       >
         <Layer>
           <Image image={baseFileStore.canvasEl} />
-          {signStore.usingList.map((signUrl, index) => (
+          {signStore.usingList.map(sign => (
             <TransformableImage
-              signUrl={signUrl}
-              isSelected={signStore.selectedSign === signUrl}
-              key={signUrl}
+              sign={sign}
+              isSelected={signStore.selectedId === sign.id}
+              key={sign.id}
             />
           ))}
         </Layer>

@@ -1,5 +1,5 @@
 import iconPlus from '../assets/images/icons/plus.png'
-import { useState, useRef, useEffect, MouseEventHandler } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useSignStore } from '../store'
 import { getElementContentSize } from '../utils'
 import ModelSign from './ModelSign'
@@ -34,12 +34,6 @@ const EditPanel = () => {
     })
   }, [])
 
-  const insertSign = (signUrl: string): MouseEventHandler => {
-    return () => {
-      signStore.apply(signUrl)
-    }
-  }
-
   return (
     <div ref={editPanel} className="flex flex-col gap-2 p-6">
       <button
@@ -53,11 +47,16 @@ const EditPanel = () => {
         className="scrollbar-hide mb-auto overflow-hidden overflow-y-auto"
         style={{ maxHeight: `${signPreviewSize.height}px` }}
       >
-        {signStore.localList.map(signUrl => (
-          <div key={signUrl} onClick={insertSign(signUrl)}>
+        {signStore.localList.map(sign => (
+          <div
+            key={sign.id}
+            onClick={() => {
+              signStore.apply(sign)
+            }}
+          >
             <ImageUrlPreview
               className="mb-2 cursor-pointer rounded border border-gray-dark transition-colors duration-200 hover:bg-primary-selected"
-              url={signUrl}
+              url={sign.url}
               width={signPreviewSize.width}
             />
           </div>
