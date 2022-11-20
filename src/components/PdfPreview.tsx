@@ -1,21 +1,24 @@
 import { useRef, useEffect } from 'react'
 import konva from 'konva'
 import { Stage, Layer, Image } from 'react-konva'
-import { useBaseFileStore } from '../store'
+import { useBaseFileStore, useSignStore } from '../store'
 import { handlePdf } from '../utils'
+import TransformableImage from './ImageTransformable'
 
 const PdfPreview = () => {
   const stage = useRef<konva.Stage>(null)
   const previewBox = useRef<HTMLDivElement>(null)
-  const baseFile = useBaseFileStore()
+
+  const baseFileStore = useBaseFileStore()
+  const signStore = useSignStore()
 
   useEffect(() => {
     const defineBaseFile = async () => {
       if (!previewBox.current) return
 
-      if (baseFile.pdfDocProxy) {
+      if (baseFileStore.pdfDocProxy) {
         const baseFilePageProxy = await handlePdf.getPage(
-          baseFile.pdfDocProxy,
+          baseFileStore.pdfDocProxy,
           1
         )
 
@@ -26,8 +29,11 @@ const PdfPreview = () => {
         })
         if (!canvas) return
 
-        baseFile.setCanvasEl(canvas.el)
-        baseFile.setPreviewSize({ width: canvas.width, height: canvas.height })
+        baseFileStore.setCanvasEl(canvas.el)
+        baseFileStore.setPreviewSize({
+          width: canvas.width,
+          height: canvas.height
+        })
       }
     }
 
@@ -42,12 +48,19 @@ const PdfPreview = () => {
     >
       <Stage
         ref={stage}
-        width={baseFile.previewSize.width}
-        height={baseFile.previewSize.height}
+        width={baseFileStore.previewSize.width}
+        height={baseFileStore.previewSize.height}
         className="flex justify-center"
       >
         <Layer>
-          <Image image={baseFile.canvasEl} />
+          <Image image={baseFileStore.canvasEl} />
+          {signStore.usingList.map((signUrl, index) => (
+            <TransformableImage
+              signUrl={signUrl}
+              isSelected={signStore.selectedSign === signUrl}
+              key={signUrl}
+            />
+          ))}
         </Layer>
       </Stage>
     </div>

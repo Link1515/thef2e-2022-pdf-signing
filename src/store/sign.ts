@@ -4,11 +4,14 @@ import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SignState {
   localList: string[]
-  usingList: string[]
   saveToLocal: (sign: string) => void
   removeFromLocal: (index: number) => void
+
+  usingList: string[]
+  selectedSign: string
   apply: (sign: string) => void
   remove: (index: number) => void
+  select: (sign: string) => void
 }
 
 export const useSignStore = create<SignState>()(
@@ -24,12 +27,16 @@ export const useSignStore = create<SignState>()(
         }),
 
       usingList: [],
+      selectedSign: '',
       apply: sign => set(state => ({ usingList: [...state.usingList, sign] })),
       remove: index =>
         set(state => {
           state.usingList.splice(index, 1)
           return { usingList: [...state.usingList] }
-        })
+        }),
+      select: sign => {
+        set({ selectedSign: sign })
+      }
     }),
     {
       name: 'sign-storage',
