@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "framer-motion": "^7.6.7",
+    "jspdf": "^2.5.1",
     "konva": "^8.3.14",
     "nanoid": "^4.0.0",
     "pdfjs-dist": "^3.0.279",

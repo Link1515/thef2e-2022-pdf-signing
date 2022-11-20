@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import konva from 'konva'
 import { Stage, Layer, Image } from 'react-konva'
 import { useBaseFileStore, useSignStore } from '../store'
@@ -11,6 +12,7 @@ interface Props {
 
 const PdfPreview = (props: Props) => {
   const { isFinish } = props
+  const navigate = useNavigate()
 
   const stage = useRef<konva.Stage>(null)
   const previewBox = useRef<HTMLDivElement>(null)
@@ -50,6 +52,7 @@ const PdfPreview = (props: Props) => {
   useEffect(() => {
     if (isFinish && stage.current) {
       baseFileStore.setFinalData(stage.current.toDataURL())
+      navigate('/final')
     }
   }, [isFinish])
 
