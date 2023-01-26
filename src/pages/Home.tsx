@@ -36,7 +36,9 @@ const UploadFile = () => {
         </div>
       </div>
       <footer className="flex h-12 items-center bg-gray-dark">
-        <p className="container text-sm text-white">@ 2022 The F2E 4th</p>
+        <p className="container text-center text-sm text-white">
+          @ 2022 The F2E 4th
+        </p>
       </footer>
     </>
   )

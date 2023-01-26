@@ -2,9 +2,11 @@ import { useState } from 'react'
 import Navbar from '../components/Navbar'
 import PdfPreview from '../components/PdfPreview'
 import EditPanel from '../components/EditPanel'
+import { useSignStore } from '../store'
 
 const Edit = () => {
   const [isFinish, setFinishState] = useState(false)
+  const signStore = useSignStore()
 
   return (
     <>
@@ -13,6 +15,7 @@ const Edit = () => {
         <PdfPreview isFinish={isFinish} />
         <EditPanel
           onGoNext={() => {
+            signStore.select('')
             setFinishState(true)
           }}
         />
